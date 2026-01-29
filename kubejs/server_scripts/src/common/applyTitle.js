@@ -1,6 +1,9 @@
+//priority:100
+
 /*
- * titleset.js
- * 称号をセットします
+    server_scripts/src/common/ApplyTitle.js
+    書いた人:シェイル
+    称号をセットするグローバル関数
  */
 
 /**
@@ -8,11 +11,10 @@
  * @param {Internal.Player} player プレイヤーオブジェクト
  * @param {string} titleData 称号データ
  */
-global.applyTitle = (player, titleData) => {
+global.ApplyTitle = (player, titleData) => {
     const server = player.server;
     const teamName = `t_title_${player.username}`;
 
-    // titleData.display が文字列であることを前提とする.
     let prefix = titleData.display || "";
 
     server.runCommandSilent(`team add ${teamName}`);
