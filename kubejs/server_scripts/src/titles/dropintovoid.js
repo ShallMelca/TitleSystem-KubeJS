@@ -10,7 +10,6 @@ EntityEvents.death('player', event => {
     if (!event.entity.isPlayer()) return;   // プレイヤー以外が死んだ場合無視.
 
     const { player, server, source } = event;
-    let damageid = source.type();
 
     if (source.type().msgId() == 'outOfWorld') {
 
