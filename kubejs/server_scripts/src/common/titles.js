@@ -29,6 +29,10 @@ global.TITLES = {
         rank: 1500,  //ここマジで適当に決めた.
         display: "§d[メガトンコイン]§r "
     },
+    LAVADEATH: {
+        rank: 100,
+        display: "§c[溶§6岩§c温§6泉§c愛§6好§c家]§r "
+    },
     NONE: {
         rank: 0,
         display: ""
