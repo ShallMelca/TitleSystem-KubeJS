@@ -14,6 +14,7 @@ EntityEvents.death('player', event => {
     if (source.type().msgId() == 'lava') {
         let playerLavaDeathCount = server.persistentData[player.name + "_lavaDeath"] || 0;
         playerLavaDeathCount++;
+        server.persistentData[player.name + "_lavaDeath"] = playerLavaDeathCount;
 
         global.checkHighScore(server, player, playerLavaDeathCount, 5, "lavaDeath", global.TITLES.LAVADEATH);
     }

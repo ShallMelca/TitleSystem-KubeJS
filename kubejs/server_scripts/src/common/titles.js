@@ -30,7 +30,7 @@ global.TITLES = {
         display: "§d[メガトンコイン]§r "
     },
     LAVADEATH: {
-        rank: 100,
+        rank: 101,
         display: "§c[溶§6岩§c温§6泉§c愛§6好§c家]§r "
     },
     NONE: {

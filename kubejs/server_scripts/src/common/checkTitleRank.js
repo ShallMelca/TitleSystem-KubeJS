@@ -15,7 +15,7 @@ global.CheckTitleRank = (player, nextTitle) => {
     let currentTitleId = player.persistentData.current_title_id || "NONE";
     let currentRank = global.TITLES[currentTitleId].rank;
 
-    if (nextTitle.rank > currentRank) {
+    if (currentRank < nextTitle.rank) {
         global.ApplyTitle(player, nextTitle);
     }
 }
