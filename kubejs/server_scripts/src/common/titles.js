@@ -33,6 +33,10 @@ global.TITLES = {
         rank: 101,
         display: "§c[溶§6岩§c温§6泉§c愛§6好§c家]§r "
     },
+    GENBACAT: {
+        rank: 102,
+        display: "§7[現場猫]§r "
+    },
     NONE: {
         rank: 0,
         display: ""
