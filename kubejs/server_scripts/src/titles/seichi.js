@@ -1,7 +1,7 @@
 //priority:1
 
 /*
-    server_scripts/src/titles/mining.js
+    server_scripts/src/titles/seichi.js
     書いた人:みっちー
     整地王
 */
