@@ -16,6 +16,6 @@ EntityEvents.death('player', event => {
         playerfallDeathCount++;
         server.persistentData[player.name + "_fallDeath"] = playerfallDeathCount;
 
-        global.checkHighScore(server, player, playerfallDeathCount, 5, "fallDeath", global.TITLES.GENBACAT);
+        global.checkHighScore(server, player, playerfallDeathCount, global.TITLES.GENBACAT.least, "fallDeath", global.TITLES.GENBACAT);
     }
 });

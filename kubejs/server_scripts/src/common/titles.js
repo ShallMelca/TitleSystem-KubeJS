@@ -10,6 +10,7 @@
  * @typedef {Object} TitleData
  * @property {number} rank 称号の優先度（高いほど上位）
  * @property {string} display ゲーム内で表示される名前（§コード）
+ * @property {number} least 追加：称号に必要な最低値。
  */
 
 /**
@@ -19,26 +20,37 @@
 global.TITLES = {
     MINING: {
         rank: 100,
-        display: "§6[採掘王]§r "
+        display: "§6[採掘王]§r ",
+        least: 128
     },
     PANDA: {
         rank: 200,
-        display: "§f[p§8a§fn§8d§fa]§r "
+        display: "§f[p§8a§fn§8d§fa]§r ",
+        least: 5
     },
     MEGATONCOIN: {
-        rank: 1500,  //ここマジで適当に決めた.
-        display: "§d[メガトンコイン]§r "
+        rank: 1500, //ここマジで適当に決めた.
+        display: "§d[メガトンコイン]§r ",
+        least: 0    //CheckHighScore通らなそうなので参照されない...はず
     },
     LAVADEATH: {
         rank: 101,
-        display: "§c[溶§6岩§c温§6泉§c愛§6好§c家]§r "
+        display: "§c[溶§6岩§c温§6泉§c愛§6好§c家]§r ",
+        least: 5
     },
     GENBACAT: {
         rank: 102,
-        display: "§7[現場猫]§r "
+        display: "§7[現場猫]§r ",
+        least: 5
+    },
+    SEICHI: {
+        rank: 103,
+        display: "§a[整地王]§r",
+        least: 64
     },
     NONE: {
         rank: 0,
-        display: ""
+        display: "",
+        least: 0
     }
 };
