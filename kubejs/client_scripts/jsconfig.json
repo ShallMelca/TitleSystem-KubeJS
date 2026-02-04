@@ -1,5 +1,12 @@
 {
     "compilerOptions": {
+        "types": [
+            "../../.probe/client/packages",
+            "../../.probe/client/global",
+            "../../.probe/shared"
+        ],
+        "incremental": true,
+        "target": "ES2015",
         "skipLibCheck": true,
         "rootDir": ".",
         "allowJs": true,
@@ -11,14 +18,7 @@
         "lib": [
             "ES5",
             "ES2015"
-        ],
-        "types": [
-            "../../.probe/client/packages",
-            "../../.probe/client/global",
-            "../../.probe/shared"
-        ],
-        "incremental": true,
-        "target": "ES2015"
+        ]
     },
     "include": [
         "./**/*.js"

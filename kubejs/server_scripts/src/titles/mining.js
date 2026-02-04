@@ -18,5 +18,5 @@ BlockEvents.broken(event => {   // ブロックが破壊された時……
     let deepslate = player.stats.getBlocksMined('deepslate');
     let currentScore = stone + deepslate;
 
-    global.checkHighScore(server, player, currentScore, 2, "mining", global.TITLES.MINING);
+    global.checkHighScore(server, player, currentScore, global.TITLES.MINING.least, "mining", global.TITLES.MINING);
 });
