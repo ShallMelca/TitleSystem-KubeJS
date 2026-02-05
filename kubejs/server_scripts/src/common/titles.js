@@ -15,7 +15,11 @@
 
 /**
  * 登録されている称号の全リスト
- * @type {Object.<string, TitleData>}
+ * @type {Object.<string, {rank: number, display: string, least: number}>}
+ * * properties:
+ * - rank: 称号の優先順位（数値が高いほど上位の称号として扱われる）
+ * - display: チャット等で使用される装飾済みの表示名
+ * - least: その称号を得るために必要な最低値（採掘数、死亡数など）
  */
 global.TITLES = {
     MINING: {
@@ -23,30 +27,50 @@ global.TITLES = {
         display: "§6[採掘王]§r ",
         least: 128
     },
+    SEICHI: {
+        rank: 101,
+        display: "§a[整地王]§r",
+        least: 64
+    },
+    LAVADEATH: {
+        rank: 150,
+        display: "§c[溶§6岩§c温§6泉§c愛§6好§c家]§r ",
+        least: 5
+    },
+    GENBACAT: {
+        rank: 151,
+        display: "§7[現場猫]§r ",
+        least: 5
+    },
+    HERO: {
+        rank: 250,
+        dispaly: "§3[勇者] ",
+        least: 64
+    },
+    FISHCOMP: {
+        rank: 251,
+        display: "§b[漁協組合] ",
+        least: 32
+    },
+    WALKMASTER: {
+        rank: 252,
+        display: "§2[サンポマスター] ",
+        least: 1024 // メートルです.
+    },
     PANDA: {
-        rank: 200,
+        rank: 300,
         display: "§f[p§8a§fn§8d§fa]§r ",
         least: 5
+    },
+    TRASHMAN: {
+        rank: 500,
+        display: "§x§7§7§8§8§9§9[ポイ捨て常習犯]",
+        least: 32
     },
     MEGATONCOIN: {
         rank: 1500, //ここマジで適当に決めた.
         display: "§d[メガトンコイン]§r ",
         least: 0    //CheckHighScore通らなそうなので参照されない...はず
-    },
-    LAVADEATH: {
-        rank: 101,
-        display: "§c[溶§6岩§c温§6泉§c愛§6好§c家]§r ",
-        least: 5
-    },
-    GENBACAT: {
-        rank: 102,
-        display: "§7[現場猫]§r ",
-        least: 5
-    },
-    SEICHI: {
-        rank: 103,
-        display: "§a[整地王]§r",
-        least: 64
     },
     NONE: {
         rank: 0,
