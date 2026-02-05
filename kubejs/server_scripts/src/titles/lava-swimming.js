@@ -7,15 +7,16 @@
 */
 
 EntityEvents.death('player', event => {
-    if (!event.entity.isPlayer()) return;   // プレイヤー以外が死んだ場合無視.
+    if (!event.player) return;   // プレイヤー以外が死んだ場合無視.
 
-    const { player, server, source } = event;
+    if (event.source.type().msgId() != 'lava') return;    // 早期リターンに変更
 
-    if (source.type().msgId() == 'lava') {
-        let playerLavaDeathCount = server.persistentData[player.name + "_lavaDeath"] || 0;
-        playerLavaDeathCount++;
-        server.persistentData[player.name + "_lavaDeath"] = playerLavaDeathCount;
+    const { player, server } = event;    // ここで変数化
 
-        global.checkHighScore(server, player, playerLavaDeathCount, global.TITLES.LAVADEATH.least, "lavaDeath", global.TITLES.LAVADEATH);
-    }
+    let playerLavaDeathCount = server.persistentData[player.name + "_lavaDeath"] || 0;
+    playerLavaDeathCount++;
+    server.persistentData[player.name + "_lavaDeath"] = playerLavaDeathCount;
+
+    global.checkHighScore(server, player, playerLavaDeathCount, global.TITLES.LAVADEATH.least, "lavaDeath", global.TITLES.LAVADEATH);
+
 });

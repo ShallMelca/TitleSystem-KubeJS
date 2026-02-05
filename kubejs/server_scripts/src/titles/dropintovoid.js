@@ -7,18 +7,16 @@
 */
 
 EntityEvents.death('player', event => {
-    if (!event.entity.isPlayer()) return;   // プレイヤー以外が死んだ場合無視.
+    if (!event.player) return;   // プレイヤー以外が死んだ場合無視.
 
-    const { player, server, source } = event;
+    if (event.source.type().msgId() != 'outOfWorld') return;    // 早期リターンに変更
 
-    if (source.type().msgId() == 'outOfWorld') {
+    if (event.server.persistentData.firstVoidOccurred) return;  // 早期リターンに変更
 
-        if (!server.persistentData.firstVoidOccurred) {
+    const { player, server } = event;    // ここで変数化
 
-            server.persistentData.firstVoidOccurred = true;
+    server.persistentData.firstVoidOccurred = true;
 
-            server.tell(Text.lightPurple(`${player.username} う　わ　あ　あ　あ　あ　あ　あ　あ　あ　あ　あ　あ　！`));
-            global.CheckTitleRank(player, global.TITLES.MEGATONCOIN);
-        }
-    }
+    server.tell(Text.lightPurple(`${player.username} う　わ　あ　あ　あ　あ　あ　あ　あ　あ　あ　あ　あ　！`));
+    global.CheckTitleRank(player, global.TITLES.MEGATONCOIN);
 });
