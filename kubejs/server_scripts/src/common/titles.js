@@ -12,15 +12,6 @@
  * @property {string} display ゲーム内で表示される名前（§コード）
  * @property {number} least 追加：称号に必要な最低値。
  */
-
-/**
- * 登録されている称号の全リスト
- * @type {Object.<string, {rank: number, display: string, least: number}>}
- * * properties:
- * - rank: 称号の優先順位（数値が高いほど上位の称号として扱われる）
- * - display: チャット等で使用される装飾済みの表示名
- * - least: その称号を得るために必要な最低値（採掘数、死亡数など）
- */
 global.TITLES = {
     MINING: {
         rank: 100,
