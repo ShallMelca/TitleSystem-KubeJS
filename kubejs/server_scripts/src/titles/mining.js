@@ -7,11 +7,12 @@
 */
 
 BlockEvents.broken(event => {   // ブロックが破壊された時……
-    const { player, block, server } = event;
-    if (!player) return;
+    if (!event.player) return;
 
     // 破壊されたブロックIDが石or深層岩でないなら終了
-    if (block.id !== 'minecraft:stone' && block.id !== 'minecraft:deepslate') return;
+    if (event.block.id !== 'minecraft:stone' && event.block.id !== 'minecraft:deepslate') return;
+
+    const { player, server } = event;   // 軽量化のために位置調整
 
     // 1. 現在のプレイヤーの合計採掘数を取得.
     let stone = player.stats.getBlocksMined('stone');

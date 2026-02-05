@@ -18,15 +18,17 @@
 global.checkHighScore = (server, player, currentScore, least, dataKey, titleData) => {
     // 永続データから今のトップ情報を取得.
     let topScore = server.persistentData[dataKey + "_score"] || 0;
-    let topPlayerName = server.persistentData[dataKey + "_player"] || "";
 
-    console.info(`[${dataKey}] Score: ${currentScore} / Record: ${topScore}`);
+    // 負荷軽減のために削除
+    // console.info(`[${dataKey}] Score: ${currentScore} / Record: ${topScore}`);
 
     // least未満なら何もしない(共通ルールとするか、これも引数にしても良い)
     if (currentScore < least) return;
 
     if (currentScore <= topScore) return;
 
+    // 負荷軽減のために移動
+    let topPlayerName = server.persistentData[dataKey + "_player"] || "";
 
     // 同一プレイヤーならスコア更新のみ.
     if (player.username === topPlayerName) {
