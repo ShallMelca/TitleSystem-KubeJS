@@ -9,9 +9,9 @@
 EntityEvents.death('player', event => {
     if (!event.player) return;   // プレイヤー以外が死んだ場合無視.
 
-    if (event.source.type().msgId() != 'outOfWorld') return;    // 早期リターンに変更
+    if (event.server.persistentData.firstVoidOccurred) return;  // 短縮のためこっちを先に判定.
 
-    if (event.server.persistentData.firstVoidOccurred) return;  // 早期リターンに変更
+    if (event.source.type().msgId() != 'outOfWorld') return;    // 早期リターンに変更.
 
     const { player, server } = event;    // ここで変数化
 

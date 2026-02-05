@@ -38,7 +38,7 @@ global.TITLES = {
         dispaly: "§3[勇者] ",
         least: 64
     },
-    FISHCOMP: {
+    FISHCOMP: { //未実装
         rank: 251,
         display: "§b[漁協組合] ",
         least: 32
@@ -53,13 +53,13 @@ global.TITLES = {
         display: "§f[p§8a§fn§8d§fa]§r ",
         least: 5
     },
-    TRASHMAN: {
+    TRASHMAN: { //未実装
         rank: 500,
-        display: "§x§7§7§8§8§9§9[ポイ捨て常習犯]",
+        display: "§x§7§7§8§8§9§9[ポイ捨て常習犯]§r ",
         least: 32
     },
     MEGATONCOIN: {
-        rank: 1500, //ここマジで適当に決めた.
+        rank: 1500,
         display: "§d[メガトンコイン]§r ",
         least: 0    //CheckHighScore通らなそうなので参照されない...はず
     },
