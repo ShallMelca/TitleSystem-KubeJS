@@ -20,43 +20,73 @@ global.TITLES = {
     },
     SEICHI: {
         rank: 101,
-        display: "§a[整地王]§r",
+        display: "§a[整地王]§r ",
         least: 64
     },
-    LAVADEATH: {
-        rank: 150,
-        display: "§c[溶§6岩§c温§6泉§c愛§6好§c家]§r ",
-        least: 5
+    BREEDER: {
+        rank: 102,
+        display: "§7[酪農王]§r ",
+        least: 32
     },
-    GENBACAT: {
-        rank: 151,
-        display: "§7[現場猫]§r ",
-        least: 5
+    FARMER: {
+        rank: 103,
+        dispaly: "§2[農業王]§r ",
+        least: 32
+    },
+    WALKMASTER: {   // 取得者が結構いたので格下げ
+        rank: 103,
+        display: "§2[サンポマスター] ",
+        least: 1024 // メートルです.
     },
     HERO: {
         rank: 250,
         dispaly: "§3[勇者] ",
         least: 64
     },
-    FISHCOMP: { //未実装
+    FISHCOMP: { //未実装 魚を釣った回数
         rank: 251,
         display: "§b[漁協組合] ",
         least: 32
     },
-    WALKMASTER: {
-        rank: 252,
-        display: "§2[サンポマスター] ",
-        least: 1024 // メートルです.
+    MNA_APP: {  //未実装
+        rank: 260,
+        display: "§9[中級魔術師]§r ",
+        least: 0
+    },
+    MNA_MASTER: {   //未実装
+        rank: 261,
+        display: "§l§9[上級魔術師]§r",
+        least: 0
+    },
+    HEX_MASTER: {    // 未実装 HexCastingの魔法詠唱回数...mnaの方が作れなさそうだからなかったことにしようかな?
+        rank: 269,
+        display: "§d[HexMaster]§r",
+        least: 16
     },
     PANDA: {
         rank: 300,
         display: "§f[p§8a§fn§8d§fa]§r ",
         least: 5
     },
+    BELL: { //未実装 鐘を鳴らした回数
+        rank: 301,
+        display: "§e[近所迷惑]§r ",
+        least: 64
+    },
     TRASHMAN: { //未実装
         rank: 500,
-        display: "§x§7§7§8§8§9§9[ポイ捨て常習犯]§r ",
+        display: "§7[ポイ§8捨て§9常習犯]§r ",
         least: 32
+    },
+    LAVADEATH: {
+        rank: 550,
+        display: "§c[溶§6岩§c温§6泉§c愛§6好§c家]§r ",
+        least: 5
+    },
+    GENBACAT: {
+        rank: 551,
+        display: "§7[現場猫]§r ",
+        least: 5
     },
     MEGATONCOIN: {
         rank: 1500,
