@@ -30,7 +30,7 @@ global.TITLES = {
     },
     FARMER: {
         rank: 103,
-        dispaly: "§2[農業王]§r ",
+        display: "§2[農業王]§r ",
         least: 32
     },
     WALKMASTER: {   // 取得者が結構いたので格下げ
