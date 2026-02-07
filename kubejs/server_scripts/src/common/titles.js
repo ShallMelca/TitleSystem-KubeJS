@@ -40,7 +40,7 @@ global.TITLES = {
     },
     HERO: {
         rank: 250,
-        dispaly: "§3[勇者] ",
+        display: "§3[勇者] ",
         least: 64
     },
     FISHCOMP: { //未実装 魚を釣った回数
