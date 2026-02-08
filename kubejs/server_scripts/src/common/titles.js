@@ -19,7 +19,7 @@ global.TITLES = {
         least: 128
     },
     SEICHI: {
-        rank: 101,
+        rank: 201,
         display: "§a[整地王]§r ",
         least: 64
     },
