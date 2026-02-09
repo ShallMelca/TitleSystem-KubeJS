@@ -6,4 +6,4 @@
 .probe/*
 !.probe/probe-settings.json
 
-/*.md
+!*.md
