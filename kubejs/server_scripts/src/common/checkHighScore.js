@@ -1,4 +1,4 @@
-//priority:5
+//priority:80
 
 /*
     server_scripts/src/common/checkHighScore.js

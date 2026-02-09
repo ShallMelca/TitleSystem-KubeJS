@@ -1,4 +1,4 @@
-//priority:80
+//priority:85
 
 /*
     server_scripts/src/common/checkTitleRank.js
