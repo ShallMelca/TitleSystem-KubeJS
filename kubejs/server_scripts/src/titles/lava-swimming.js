@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/lava-swimming.js
     書いた人:シェイル
+    挑戦型
     溶岩温泉愛好家 溶岩ダイブ死5回以上
 */
 
@@ -17,6 +18,6 @@ EntityEvents.death('player', event => {
     playerLavaDeathCount++;
     server.persistentData[player.name + "_lavaDeath"] = playerLavaDeathCount;
 
-    global.checkHighScore(server, player, playerLavaDeathCount, global.TITLES.LAVADEATH.least, "lavaDeath", global.TITLES.LAVADEATH);
+    global.checkHighScore(server, player, playerLavaDeathCount, global.TITLES.LAVADEATH);
 
 });

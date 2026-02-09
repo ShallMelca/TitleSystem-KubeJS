@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/breeder.js
     書いた人:シェイル
+    ランキング型
     酪農王
 */
 
@@ -14,7 +15,7 @@ PlayerEvents.tick(event => {
     try {
         let cullentScore = player.stats.getAnimalsBred() || 0;
 
-        global.checkHighScore(server, player, cullentScore, global.TITLES.BREEDER.least, "breeder", global.TITLES.BREEDER);
+        global.checkHighScore(server, player, cullentScore, global.TITLES.BREEDER);
     }
     catch (e) {
         console.error(`[breeder] error: ${e}`);

@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/farmer.js
     書いた人:シェイル
+    ランキング型
     農業王
 */
 
@@ -14,5 +15,5 @@ BlockEvents.placed(event => {
     data++;
     player.persistentData[player.name + "_seed"] = data;
 
-    global.checkHighScore(server, player, data, global.TITLES.FARMER.least, "farmer", global.TITLES.FARMER);
+    global.checkHighScore(server, player, data, global.TITLES.FARMER);
 })

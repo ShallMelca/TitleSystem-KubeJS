@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/hero.js
     書いた人:シェイル
+    ランキング型
     勇者
 */
 
@@ -20,5 +21,5 @@ EntityEvents.death(event => {
     let currentKill = (player.persistentData.monsterkill || 0) + 1;
     player.persistentData.monsterkill = currentKill;
 
-    global.checkHighScore(server, player, currentKill, global.TITLES.HERO.least, "hero", global.TITLES.HERO);
+    global.checkHighScore(server, player, currentKill, global.TITLES.HERO);
 });

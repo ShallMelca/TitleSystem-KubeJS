@@ -1,4 +1,4 @@
-//priority:5
+//priority:80
 
 /*
     server_scripts/src/common/checkHighScore.js
@@ -11,28 +11,26 @@
  * @param {Internal.Server} server サーバーオブジェクト
  * @param {Internal.Player} player 操作対象のプレイヤー
  * @param {number} currentScore 今回のスコア
- * @param {number} least 称号獲得に最低限必要な数値
- * @param {string} dataKey 保存用のキー名（例: 'mining_top'）
  * @param {any} titleData 付与する称号データ（titles.jsを参照）
  */
-global.checkHighScore = (server, player, currentScore, least, dataKey, titleData) => {
+global.checkHighScore = (server, player, currentScore, titleData) => {
     // 永続データから今のトップ情報を取得.
-    let topScore = server.persistentData[dataKey + "_score"] || 0;
+    let topScore = server.persistentData[titleData.key + "_score"] || 0;
 
     // 負荷軽減のために削除
-    // console.info(`[${dataKey}] Score: ${currentScore} / Record: ${topScore}`);
+    // console.info(`[${titleData.key}] Score: ${currentScore} / Record: ${topScore}`);
 
     // least未満なら何もしない
-    if (currentScore < least) return;
+    if (currentScore < titleData.least) return;
 
     if (currentScore <= topScore) return;
 
     // 負荷軽減のために移動
-    let topPlayerName = server.persistentData[dataKey + "_player"] || "";
+    let topPlayerName = server.persistentData[titleData.key + "_player"] || "";
 
     // 同一プレイヤーならスコア更新のみ.
     if (player.username === topPlayerName) {
-        server.persistentData[dataKey + "_score"] = currentScore;
+        server.persistentData[titleData.key + "_score"] = currentScore;
         return;
     }
 
@@ -41,7 +39,7 @@ global.checkHighScore = (server, player, currentScore, least, dataKey, titleData
         let oldChamp = server.getPlayer(topPlayerName);
         if (oldChamp) {
             global.ApplyTitle(oldChamp, global.TITLES.NONE);
-            oldChamp.tell(Text.red(`${categoryName}世界一の座を奪われました！`));
+            // oldChamp.tell(Text.red(`${categoryName}世界一の座を奪われました！`));
         }
     }
 
@@ -49,8 +47,8 @@ global.checkHighScore = (server, player, currentScore, least, dataKey, titleData
     global.CheckTitleRank(player, titleData);
 
     // 記録の保存.
-    server.persistentData[dataKey + "_score"] = currentScore;
-    server.persistentData[dataKey + "_player"] = player.username;
+    server.persistentData[titleData.key + "_score"] = currentScore;
+    server.persistentData[titleData.key + "_player"] = player.username;
 
     // 通知用変換.
     let prefix = titleData.display || "";

@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/falldeath.js
     書いた人:シェイル
+    ランキング型
     現場猫 落下死5回以上
 */
 
@@ -17,6 +18,6 @@ EntityEvents.death('player', event => {
     playerfallDeathCount++;
     server.persistentData[player.name + "_fallDeath"] = playerfallDeathCount;
 
-    global.checkHighScore(server, player, playerfallDeathCount, global.TITLES.GENBACAT.least, "fallDeath", global.TITLES.GENBACAT);
+    global.checkHighScore(server, player, playerfallDeathCount, global.TITLES.GENBACAT);
 
 });
