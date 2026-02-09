@@ -4,8 +4,8 @@
     server_scripts/src/common/changeSavetype.js
     書いた人:シェイル
     旧保存形式から新保存形式への移行を済ませる
-    サーバー起動時にserver.persistantDataを
-    プレイヤーログイン時にplayer.persistantDataを
+    サーバー起動時にserver.persistantDataを移行
+    プレイヤーログイン時にplayer.persistantDataを移行する
     それぞれ一度のみ実行
 */
 
@@ -24,8 +24,6 @@ ServerEvents.loaded(event => {
 
     // 初期化.
     if (!serverData.kings) serverData.kings = {};
-    if (serverData.kings.score) serverData.kings.score = {};
-    if (!serverData.kings.player) serverData.kings.player = {};
 
     // 移行.
     Object.values(global.TITLES).forEach(title => {
@@ -33,10 +31,19 @@ ServerEvents.loaded(event => {
         if (!title.isRanking) return;
 
         // データ移行.
-        serverData.kings.score[title.key] = serverData[title.key + "_score"];
-        serverData.kings.player[title.key] = serverData[title.key + "_player"];
-        console.info(`${file}${serverData[title.key + "_score"]} から ${serverData.kings.score[title.key]} へ移行しました`);
-        console.info(`${file}${serverData[title.key + "_player"]} から ${serverData.kings.player[title.key]} へ移行しました`);
+        if (!serverData.kings[title.key]) {
+            serverData.kings[title.key] = {};
+        }
+
+        // データ取得
+        let oldScore = serverData[title.key + "_score"];
+        let oldPlayer = serverData[title.key + "_player"];
+
+        serverData.kings[title.key].score = oldScore || 0; // undefined対策.
+        serverData.kings[title.key].player = oldPlayer || "None";
+
+        console.info(`${file}${title.key}: ${oldScore} -> ${serverData.kings[title.key].score} へ移行`);
+        console.info(`${file}${title.key}: ${oldPlayer} -> ${serverData.kings[title.key].player} へ移行`);
 
         // 旧形式のデータを削除.
         serverData.remove(title.key + "_score");
@@ -46,6 +53,7 @@ ServerEvents.loaded(event => {
     // 各プレイヤー依存に変えるため削除.
     serverData.remove("firstVoidOccurred");
     serverData.remove("firstBamboogetted");
+    console.info(`${file} 移行完了`);
 })
 
 
@@ -57,54 +65,71 @@ PlayerEvents.loggedIn(event => {
     const playerData = player.persistentData;
     const serverData = server.persistentData;
 
-    console.info(`${file}プレイヤー ${player.name} (uuid:${player.uuid})さんに関するセーブデータを新形式に移行します`);
+    console.info(`${file}プレイヤー ${player.name} (uuid:${player.uuid}) に関するセーブデータを新形式に移行します`);
 
     playerData.isMoved = true;
 
-    // 初期化
+    // 初期化.
     if (!playerData.kings) playerData.kings = {};
-    if (!playerData.kings.titles) playerData.kings.titles = {};
+    if (!playerData.kings.titles) playerData.kings.titles = [];     // 所持称号配列.
     if (!playerData.kings.data) playerData.kings.data = {};
+    if (!playerData.kings.data.flag) playerData.kings.data.flag = {};       // boolean
+    if (!playerData.kings.data.score) playerData.kings.data.score = {};     // int
 
-    // 移行
-    playerData.kings.data[global.TITLES.HERO.key] = playerData.monsterkill;
-    console.info(`${file}${playerData.monsterkill} から ${playerData.kings.data[global.TITLES.HERO.key]} へ移行しました`);
+    // -----データ移行-----
+    // HERO 敵討伐数データ.
+    if (playerData.monsterkill) {
+        playerData.kings.data.score[global.TITLES.HERO.key] = playerData.monsterkill;
+        playerData.remove("monsterkill");
+    }
 
-    // なぜかserver側に保存していたものをplayer管轄に移動
+    // なぜかserver側に保存していたものをplayer管轄に移動(fallDeath,lavaDeath).
     const keysToMigrate = ["fallDeath", "lavaDeath"];
 
     keysToMigrate.forEach(keyName => {
-        // 旧形式のキー（PlayerName_fallDeath）を作成.
         let oldKey = player.name + "_" + keyName;
 
         if (serverData.contains(oldKey)) {
-            // サーバー側から値を取得.
             let value = serverData[oldKey];
-
-            // プレイヤー側のデータに保存.
-            playerData.kings.data[keyName] = value; // fallDeath,lavaDeath共にkeyそのままなので大丈夫なはず...
-
-            console.info(`${file}${serverData[oldKey]} から ${playerData.kings.data[keyName]} へ移行しました`);
+            playerData.kings.data.score[keyName] = value; // fallDeath,lavaDeath共にkeyそのままなので大丈夫なはず...
+            console.info(`${file}${serverData[oldKey]} から ${playerData.kings.data.score[keyName]} へ移行しました`);
 
             // サーバー側の古いデータを削除.
             serverData.remove(oldKey);
         }
     });
 
-    // 種植え回数(農業王)
-    if (playerData[player.name + "_seed"]) {
-        playerData.kings.data[global.TITLES.FARMER.key] = playerData[player.name + "_seed"];
-        console.info(`${file}${serverData[player.name + "_seed"]} から ${playerData.kings.data[global.TITLES.FARMER.key]} へ移行しました`);
-        playerData.remove(`${player.name}_seed`);
+    // 種植え回数(農業王用個人スコア)
+    let oldFarmerkey = player.name + "_seed";
+    if (playerData.contains(oldFarmerkey)) {
+        playerData.kings.data.score[global.TITLES.FARMER.key] = playerData[oldFarmerkey];
+        console.info(`${file}${serverData[oldFarmerkey]} から ${playerData.kings.data.score[global.TITLES.FARMER.key]} へ移行しました`);
+        playerData.remove(oldFarmerkey);
     }
 
-    // 唯一解除済の挑戦型であるpandaに対する処理
-    if (playerData.current_title_id == "PANDA") {
-        // 解放済リストに入れる
-        let titleList = playerData.kings.titles;
-        titleList.push(global.TITLES.PANDA.key);
-        playerData.kings.titles = titleList;
+    let oldTitleId = playerData.current_title_id;
+    // 唯一解除済の挑戦型であるpandaに対する処理.
+    if (oldTitleId == "PANDA") {
+        // 多重取得を防ぐためのboolean
+        playerData.kings.data.flag.firstBambooGetted = true;
     }
 
-    playerData.kings.current_title_id == global.TITLES[playerData.current_title_id];
+    // 現在の称号オブジェクトを取得
+    if (oldTitleId && global.TITLES[oldTitleId]) {
+        let titleObj = global.TITLES[oldTitleId];
+
+        // 新形式の「現在の称号（key）」を保存
+        playerData.kings.current = titleObj.key;
+
+        // 所持リストになければ追加
+        let currentTitles = playerData.kings.titles;
+        if (!currentTitles.contains(titleObj.key)) {
+            currentTitles.push(titleObj.key);
+            playerData.kings.titles = currentTitles; // 書き戻し
+        }
+    }
+
+    // 旧形態の「現在の称号」を示すものを削除.
+    playerData.remove("current_title_id");
+    console.info(`${file}${player.name} の移行が正常に完了しました`);
 })
