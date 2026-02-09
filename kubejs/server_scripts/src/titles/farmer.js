@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/farmer.js
     書いた人:シェイル
+    ランキング型
     農業王
 */
 

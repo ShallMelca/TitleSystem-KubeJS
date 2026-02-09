@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/hero.js
     書いた人:シェイル
+    ランキング型
     勇者
 */
 

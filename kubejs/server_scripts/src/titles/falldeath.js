@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/falldeath.js
     書いた人:シェイル
+    ランキング型
     現場猫 落下死5回以上
 */
 

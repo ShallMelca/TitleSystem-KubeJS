@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/lava-swimming.js
     書いた人:シェイル
+    挑戦型
     溶岩温泉愛好家 溶岩ダイブ死5回以上
 */
 

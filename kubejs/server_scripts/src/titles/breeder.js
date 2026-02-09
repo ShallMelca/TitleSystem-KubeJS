@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/breeder.js
     書いた人:シェイル
+    ランキング型
     酪農王
 */
 

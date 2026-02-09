@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/panda.js
     書いた人:シェイル
+    挑戦型
     panda
 */
 

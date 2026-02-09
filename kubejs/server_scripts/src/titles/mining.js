@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/mining.js
     書いた人:シェイル
+    ランキング型
     採掘王
 */
 

@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/seichi.js
     書いた人:みっちー
+    ランキング型
     整地王
 */
 

@@ -3,6 +3,7 @@
 /*
     server_scripts/src/titles/dropintovoid.js
     書いた人:シェイル
+    挑戦型
     メガトンコイン
 */
 
