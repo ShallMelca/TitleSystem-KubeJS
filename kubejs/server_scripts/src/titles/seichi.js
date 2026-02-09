@@ -22,5 +22,5 @@ BlockEvents.broken(event => {   // ブロックが破壊された時……
     let gravel = player.stats.getBlocksMined('gravel');
     let currentScore = grass + dirt + gravel;
 
-    global.checkHighScore(server, player, currentScore, global.TITLES.SEICHI.least, "seichi", global.TITLES.SEICHI);
+    global.checkHighScore(server, player, currentScore, global.TITLES.SEICHI);
 });

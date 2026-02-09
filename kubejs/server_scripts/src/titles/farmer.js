@@ -14,5 +14,5 @@ BlockEvents.placed(event => {
     data++;
     player.persistentData[player.name + "_seed"] = data;
 
-    global.checkHighScore(server, player, data, global.TITLES.FARMER.least, "farmer", global.TITLES.FARMER);
+    global.checkHighScore(server, player, data, global.TITLES.FARMER);
 })

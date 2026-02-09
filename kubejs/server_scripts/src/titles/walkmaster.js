@@ -16,7 +16,7 @@ PlayerEvents.tick(event => {
         let walk = player.stats.getSprintDistance() || 0;
         let cullentScore = (sprint + walk) / 100; // cmをmに変換
 
-        global.checkHighScore(server, player, cullentScore, global.TITLES.WALKMASTER.least, "walkMaster", global.TITLES.WALKMASTER);
+        global.checkHighScore(server, player, cullentScore, global.TITLES.WALKMASTER);
     }
     catch (e) {
         console.error(`[walkmaster] error: ${e}`);
