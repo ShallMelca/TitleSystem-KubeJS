@@ -30,20 +30,19 @@ ServerEvents.loaded(event => {
         // 実装済挑戦型はスルー.
         if (!title.isRanking) return;
 
-        // データ移行.
-        if (!serverData.kings[title.key]) {
-            serverData.kings[title.key] = {};
-        }
-
         // データ取得
         let oldScore = serverData[title.key + "_score"];
         let oldPlayer = serverData[title.key + "_player"];
 
-        serverData.kings[title.key].score = oldScore || 0; // undefined対策.
-        serverData.kings[title.key].player = oldPlayer || "None";
+        // データ移行.
+        let newData = {
+            score: oldScore || 0,
+            player: oldPlayer || "None"
+        };
+        serverData.kings[title.key] = newData;
 
-        console.info(`${file}${title.key}: ${oldScore} -> ${serverData.kings[title.key].score} へ移行`);
-        console.info(`${file}${title.key}: ${oldPlayer} -> ${serverData.kings[title.key].player} へ移行`);
+        console.info(`${file}${title.key}: ${oldScore} -> ${newData.score} へ移行`);
+        console.info(`${file}${title.key}: ${oldPlayer} -> ${newData.player} へ移行`);
 
         // 旧形式のデータを削除.
         serverData.remove(title.key + "_score");
@@ -108,6 +107,7 @@ PlayerEvents.loggedIn(event => {
     }
 
     let oldTitleId = playerData.current_title_id;
+
     // 唯一解除済の挑戦型であるpandaに対する処理.
     if (oldTitleId == "PANDA") {
         // 多重取得を防ぐためのboolean
