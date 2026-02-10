@@ -34,6 +34,8 @@ ServerEvents.loaded(event => {
         let oldScore = serverData[title.key + "_score"];
         let oldPlayer = serverData[title.key + "_player"];
 
+        if (!oldScore || !oldPlayer) return;
+
         // データ移行.
         let newData = {
             score: oldScore || 0,
@@ -41,8 +43,8 @@ ServerEvents.loaded(event => {
         };
         serverData.kings[title.key] = newData;
 
-        console.info(`${file}${title.key}: ${oldScore} -> ${newData.score} へ移行`);
-        console.info(`${file}${title.key}: ${oldPlayer} -> ${newData.player} へ移行`);
+        console.info(`${file}${title.key}: server.persistentData.${title.key}_score:${oldScore} -> server.persistentData.kings[${title.key}]:${newData.score} へ移行`);
+        console.info(`${file}${title.key}: server.persistentData.${title.key}_player:${oldPlayer} -> server.persistentData.kings[${title.key}]:${newData.player} へ移行`);
 
         // 旧形式のデータを削除.
         serverData.remove(title.key + "_score");
@@ -91,7 +93,7 @@ PlayerEvents.loggedIn(event => {
         if (serverData.contains(oldKey)) {
             let value = serverData[oldKey] || 0;
             playerData.kings.data.score[keyName] = value; // fallDeath,lavaDeath共にkeyそのままなので大丈夫なはず...
-            console.info(`${file}${serverData[oldKey]} から ${playerData.kings.data.score[keyName]} へ移行しました`);
+            console.info(`${file}${oldkey}:${serverData[oldKey]} から player.kings.data.score[${keyName}]:${playerData.kings.data.score[keyName]} へ移行しました`);
 
             // サーバー側の古いデータを削除.
             serverData.remove(oldKey);
@@ -102,7 +104,7 @@ PlayerEvents.loggedIn(event => {
     let oldFarmerkey = player.name + "_seed";
     if (playerData.contains(oldFarmerkey)) {
         playerData.kings.data.score[global.TITLES.FARMER.key] = playerData[oldFarmerkey] || 0;;
-        console.info(`${file}${serverData[oldFarmerkey]} から ${playerData.kings.data.score[global.TITLES.FARMER.key]} へ移行しました`);
+        console.info(`${file}${oldFarmerkey}:${serverData[oldFarmerkey]} から player.kings.data.score[${global.TITLES.FARMER.key}]:${playerData.kings.data.score[global.TITLES.FARMER.key]} へ移行しました`);
         playerData.remove(oldFarmerkey);
     }
 
