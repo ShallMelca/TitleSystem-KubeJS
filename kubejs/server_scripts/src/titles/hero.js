@@ -16,11 +16,12 @@ EntityEvents.death(event => {
     if (!event.entity.isMonster()) return;
 
     const { source } = event;
-    const pData = player.persistentData.kings || (player.persistentData.kings = {});
+    const playerData = source.player.persistentData.kings || (source.player.persistentData.kings = {});
+    const titlePlayerDatas = playerData.data || (playerData.data = {});
     const player = source.actual;
 
-    let currentKill = (pData.data.monsterkill || 0) + 1;
-    pData.data.monsterkill = currentKill;
+    let currentKill = (titlePlayerDatas.monsterkill || 0) + 1;
+    titlePlayerDatas.monsterkill = currentKill;
 
     global.checkHighScore(player, currentKill, global.TITLES.HERO);
 });

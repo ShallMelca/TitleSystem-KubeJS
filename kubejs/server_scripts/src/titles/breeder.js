@@ -8,8 +8,6 @@
 */
 
 global.Breeder = (player) => {
-    if (player.age % 1200 !== 0) return;  // 毎分
-
     try {
         let cullentScore = player.stats.getAnimalsBred() || 0;
 
