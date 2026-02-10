@@ -25,16 +25,14 @@ ServerEvents.commandRegistry(event => {
             // 取得済みの称号表示
             const keys = player.persistentData.kings.titles;
             let prefixText = [];
-            for (let raw of keys) {
-                let key = ("" + raw).trim();
-                key = key.replace(/^"+|"+$/g, "");
+            for (let key of keys) {
                 let title = Object.values(global.TITLES).find(t => t.key === key);
                 prefixText.push(title.display);
             }
             player.tell(`称号リスト: ${prefixText}`);
 
             // 現在セットしている称号表示
-            const currentKey = player.persistentData.kings.current.replace(/^"+|"+$/g, "");
+            const currentKey = player.persistentData.kings.current;
             const currentPrefix = Object.values(global.TITLES).find(t => t.key === currentKey).display;
             player.tell(`現在の称号: ` + currentPrefix);
 
@@ -52,14 +50,12 @@ ServerEvents.commandRegistry(event => {
                 // 対象の称号リスト取得
                 const keys = target.persistentData.kings.titles;
                 let prefixText = [];
-                for (let raw of keys) {
-                    let key = ("" + raw).trim();
-                    key = key.replace(/^"+|"+$/g, "");
+                for (let key of keys) {
                     let title = Object.values(global.TITLES).find(t => t.key === key);
                     prefixText.push(title.display);
                 }
                 // 現在セットしている称号取得
-                const currentKey = target.persistentData.kings.current.replace(/^"+|"+$/g, "");
+                const currentKey = target.persistentData.kings.current;
                 const currentPrefix = Object.values(global.TITLES).find(t => t.key === currentKey).display;
 
                 //チャット欄に送信
@@ -88,4 +84,4 @@ function safeTell(player, msg) {
     // tell が壊れててもログには残す
     console.log("[titles-debug] tell failed:", msg, e);
   }
-}
+};
