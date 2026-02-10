@@ -13,16 +13,22 @@
  */
 global.ApplyTitle = (player, titleData) => {
     const server = player.server;
-    const teamName = `t_title_${player.username}`;
+    const teamName = `t_title_${player.uuid}`;  // player.usernameからuuidへ変更
+    const pData = player.persistentData.kings;
+    const titles = pData.titles || (pData.titles = {}); // なかった場合初期化...
 
+    // 更新処理
     let prefix = titleData.display || "";
+
+    if (titleData.key != "none" && prefix == "") {
+        console.error(`[ApplyTitle] ${titleData}からdisplayデータを取得できませんでした`);
+    }
 
     server.runCommandSilent(`team add ${teamName}`);
     server.runCommandSilent(`team modify ${teamName} prefix "${prefix}"`);
     server.runCommandSilent(`team join ${teamName} ${player.username}`);
 
-    let titleKey = Object.keys(global.TITLES).find(key => global.TITLES[key] === titleData);
-    if (titleKey) {
-        player.persistentData.current_title_id = titleKey;
-    }
+    // 現在の称号をデータに保存
+    pData.current = titleData.key;
+    titles.push(titleData.key);
 };
