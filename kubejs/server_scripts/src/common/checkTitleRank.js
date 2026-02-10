@@ -12,7 +12,8 @@
  * @param {any} nextTitle 次につけたい称号
  */
 global.CheckTitleRank = (player, nextTitle) => {
-    let currentTitleId = player.persistentData.current_title_id || "NONE";
+    const playerData = player.persistentData.kings || (player.persistentData.kings = {});
+    let currentTitleId = playerData.currnet || "NONE";
 
     if (global.TITLES[currentTitleId].rank < nextTitle.rank) {
         global.ApplyTitle(player, nextTitle);

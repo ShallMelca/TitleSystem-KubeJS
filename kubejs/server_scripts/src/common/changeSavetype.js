@@ -30,20 +30,21 @@ ServerEvents.loaded(event => {
         // 実装済挑戦型はスルー.
         if (!title.isRanking) return;
 
-        // データ移行.
-        if (!serverData.kings[title.key]) {
-            serverData.kings[title.key] = {};
-        }
-
         // データ取得
         let oldScore = serverData[title.key + "_score"];
         let oldPlayer = serverData[title.key + "_player"];
 
-        serverData.kings[title.key].score = oldScore || 0; // undefined対策.
-        serverData.kings[title.key].player = oldPlayer || "None";
+        if (!oldScore || !oldPlayer) return;
 
-        console.info(`${file}${title.key}: ${oldScore} -> ${serverData.kings[title.key].score} へ移行`);
-        console.info(`${file}${title.key}: ${oldPlayer} -> ${serverData.kings[title.key].player} へ移行`);
+        // データ移行.
+        let newData = {
+            score: oldScore || 0,
+            player: oldPlayer || "None"
+        };
+        serverData.kings[title.key] = newData;
+
+        console.info(`${file}${title.key}: server.persistentData.${title.key}_score:${oldScore} -> server.persistentData.kings[${title.key}]:${newData.score} へ移行`);
+        console.info(`${file}${title.key}: server.persistentData.${title.key}_player:${oldPlayer} -> server.persistentData.kings[${title.key}]:${newData.player} へ移行`);
 
         // 旧形式のデータを削除.
         serverData.remove(title.key + "_score");
@@ -73,7 +74,7 @@ PlayerEvents.loggedIn(event => {
     if (!playerData.kings) playerData.kings = {};
     if (!playerData.kings.titles) playerData.kings.titles = [];     // 所持称号配列.
     if (!playerData.kings.data) playerData.kings.data = {};
-    if (!playerData.kings.data.flag) playerData.kings.data.flag = {};       // boolean
+    if (!playerData.kings.data.flags) playerData.kings.data.flags = {};       // boolean
     if (!playerData.kings.data.score) playerData.kings.data.score = {};     // int
 
     // -----データ移行-----
@@ -90,9 +91,9 @@ PlayerEvents.loggedIn(event => {
         let oldKey = player.name + "_" + keyName;
 
         if (serverData.contains(oldKey)) {
-            let value = serverData[oldKey];
+            let value = serverData[oldKey] || 0;
             playerData.kings.data.score[keyName] = value; // fallDeath,lavaDeath共にkeyそのままなので大丈夫なはず...
-            console.info(`${file}${serverData[oldKey]} から ${playerData.kings.data.score[keyName]} へ移行しました`);
+            console.info(`${file}${oldkey}:${serverData[oldKey]} から player.kings.data.score[${keyName}]:${playerData.kings.data.score[keyName]} へ移行しました`);
 
             // サーバー側の古いデータを削除.
             serverData.remove(oldKey);
@@ -102,21 +103,22 @@ PlayerEvents.loggedIn(event => {
     // 種植え回数(農業王用個人スコア)
     let oldFarmerkey = player.name + "_seed";
     if (playerData.contains(oldFarmerkey)) {
-        playerData.kings.data.score[global.TITLES.FARMER.key] = playerData[oldFarmerkey];
-        console.info(`${file}${serverData[oldFarmerkey]} から ${playerData.kings.data.score[global.TITLES.FARMER.key]} へ移行しました`);
+        playerData.kings.data.score[global.TITLES.FARMER.key] = playerData[oldFarmerkey] || 0;;
+        console.info(`${file}${oldFarmerkey}:${serverData[oldFarmerkey]} から player.kings.data.score[${global.TITLES.FARMER.key}]:${playerData.kings.data.score[global.TITLES.FARMER.key]} へ移行しました`);
         playerData.remove(oldFarmerkey);
     }
 
     let oldTitleId = playerData.current_title_id;
+
     // 唯一解除済の挑戦型であるpandaに対する処理.
     if (oldTitleId == "PANDA") {
         // 多重取得を防ぐためのboolean
-        playerData.kings.data.flag.firstBambooGetted = true;
+        playerData.kings.data.flags.firstBambooGetted = true;
     }
 
     // 現在の称号オブジェクトを取得
     if (oldTitleId && global.TITLES[oldTitleId]) {
-        let titleObj = global.TITLES[oldTitleId];
+        let titleObj = global.TITLES[oldTitleId] || global.TITLES.NONE;
 
         // 新形式の「現在の称号（key）」を保存
         playerData.kings.current = titleObj.key;

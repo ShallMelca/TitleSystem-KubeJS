@@ -12,12 +12,15 @@ EntityEvents.death('player', event => {
 
     if (event.source.type().msgId() != 'lava') return;    // 早期リターンに変更
 
-    const { player, server } = event;    // ここで変数化
+    const { player } = event;    // ここで変数化
+    const playerData = player.persistentData.kings || (player.persistentData.kings = {});
+    const titlePlayerDatas = playerData.data || (playerData.data = {});
+    const titleData = global.TITLES.LAVADEATH;
 
-    let playerLavaDeathCount = server.persistentData[player.name + "_lavaDeath"] || 0;
+    let playerLavaDeathCount = titlePlayerDatas[titleData.key] || 0;
     playerLavaDeathCount++;
-    server.persistentData[player.name + "_lavaDeath"] = playerLavaDeathCount;
+    titlePlayerDatas[titleData.key] = playerLavaDeathCount;
 
-    global.checkHighScore(server, player, playerLavaDeathCount, global.TITLES.LAVADEATH);
+    global.checkHighScore(player, playerLavaDeathCount, titleData);
 
 });

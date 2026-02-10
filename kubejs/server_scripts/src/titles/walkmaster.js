@@ -3,23 +3,19 @@
 /*
     server_scripts/src/titles/walkmaster.js
     書いた人:シェイル
-    ランキング型
+    ランキング型:tick
     サンポマスター
 */
 
-PlayerEvents.tick(event => {
-    if (event.player.age % 1200 !== 0) return;  // 毎分
-
-    const { player, server } = event;
-
+global.WalkMaster = (player) => {
     try {
         let sprint = player.stats.getWalkDistance() || 0;
         let walk = player.stats.getSprintDistance() || 0;
         let cullentScore = (sprint + walk) / 100; // cmをmに変換
 
-        global.checkHighScore(server, player, cullentScore, global.TITLES.WALKMASTER);
+        global.checkHighScore(player, cullentScore, global.TITLES.WALKMASTER);
     }
     catch (e) {
         console.error(`[walkmaster] error: ${e}`);
     }
-});
+};

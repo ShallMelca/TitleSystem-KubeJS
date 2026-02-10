@@ -10,10 +10,14 @@
 BlockEvents.placed(event => {
     if (!event.block.hasTag('minecraft:maintains_farmland')) return;
 
-    const { player, server } = event;
-    let data = player.persistentData[player.name + "_seed"] || 0;
-    data++;
-    player.persistentData[player.name + "_seed"] = data;
+    const { player } = event;
+    const playerData = player.persistentData.kings || (player.persistentData.kings = {});
+    const titlePlayerDatas = playerData.data || (playerData.data = {});
+    const titleData = global.TITLES.FARMER;
 
-    global.checkHighScore(server, player, data, global.TITLES.FARMER);
+    let data = titlePlayerDatas[titleData.key] || 0;
+    data++;
+    titlePlayerDatas[titleData.key] = data;
+
+    global.checkHighScore(player, data, titleData);
 })

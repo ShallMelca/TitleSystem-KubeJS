@@ -10,16 +10,22 @@
 BlockEvents.broken(event => {   // ブロックが破壊された時...
     if (!event.player) return;
 
-    if (event.server.persistentData.firstBamboogetted) return;  // 竹か判定より先に判定.
+    const pd = event.player.persistentData;
+    if (pd.kings && pd.kings.flags) {
+        if (pd.kings.flags[global.TITLES.MEGATONCOIN.key]) return;
+    }
 
     // 破壊されたブロックIDが竹でないなら終了.
     if (event.block.id !== 'minecraft:bamboo') return;
 
 
     const { player, server } = event;    // ここで変数化.
+    const pData = pd.kings || (pd.kings = {});
+    const flags = pData.flags || (pData.flags = {});
+    const titleData = global.TITLES.PANDA;
 
-    server.persistentData.firstBamboogetted = true;
+    flags[titleData.key] = true;
 
     server.tell(Text.lightPurple(`${player.username} 竹食ってる場合じゃねえ！`));
-    global.CheckTitleRank(player, global.TITLES.PANDA);
+    global.CheckTitleRank(player, titleData);
 });

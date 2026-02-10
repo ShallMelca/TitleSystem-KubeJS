@@ -5,3 +5,5 @@
 /kubejs/probe/
 .probe/*
 !.probe/probe-settings.json
+
+**/jsconfig.json

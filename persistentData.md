@@ -14,3 +14,52 @@
 `player.persistentData.monsterkill`　　　　　　　　　hero.js<br>
 `server.persistentData[player.name + "_lavaDeath"]`　lava-swimming.js<br>
 `server.persistentData.firstBamboogetted`　　　　　　panda.js<br>
+
+<br>
+
+# 新版
+## 各ランキング称号について
+* server.persistentData
+  * .kings
+    * .mining     (TITLES.MINING.key)
+      * .score = (int)
+      * .player = (str)
+    * .seichi
+      * .score
+      * .player
+    * ...
+
+## 挑戦型称号について
+* player.persistentData
+  * .kings
+    * .titles       (所持称号リスト)
+      * [
+      * "mining",    (TITLES.MINING.key)
+      * "panda",     (TITLES.PANDA.key)
+      * ...
+      * ]
+    * .current
+      * = "mining"  (TITLES.MINING.key)
+    * .data
+      * .flags
+        * .megatoncoin  (TITLES.MEGATONCOIN.key)
+          * = bool
+        * .panda        (TITLES.PANDA.key)
+          * = bool
+        * ...
+      * .score
+        * .monsterkill  (TITLES.HERO.key)
+          * =int        (モンスターを倒した数)
+        * .fallDeath
+          * = int       (落下死の回数)
+        * .lavaDeath
+          * = int       (溶岩死の回数)
+        * .farmer
+          * = int       (種を植えた回数)
+        * ...
+
+## その他
+* server.persistentData.isMoved
+  * サーバーデータの旧式から新式への移行が終了しているかを示すbool値
+* player.persistentData.isMoved
+  * 各プレイヤーに対してデータの旧式から新式への移行が終了しているかを示すbool値

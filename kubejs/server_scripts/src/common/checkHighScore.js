@@ -8,14 +8,17 @@
 
 /**
  * 数値で記録更新をチェックし、必要なら称号を付け替える共通関数
- * @param {Internal.Server} server サーバーオブジェクト
  * @param {Internal.Player} player 操作対象のプレイヤー
  * @param {number} currentScore 今回のスコア
  * @param {any} titleData 付与する称号データ（titles.jsを参照）
  */
-global.checkHighScore = (server, player, currentScore, titleData) => {
-    // 永続データから今のトップ情報を取得.
-    let topScore = server.persistentData[titleData.key + "_score"] || 0;
+global.checkHighScore = (player, currentScore, titleData) => {
+    const server = player.server;
+    const serverData = server.persistentData.kings || (server.persistentData.kings = {});
+    const currentData = serverData[titleData.key] || (serverData[titleData.key] = {});
+
+    // 永続データから今のトップスコアを取得.
+    let topScore = currentData.score || 0;
 
     // 負荷軽減のために削除
     // console.info(`[${titleData.key}] Score: ${currentScore} / Record: ${topScore}`);
@@ -25,21 +28,23 @@ global.checkHighScore = (server, player, currentScore, titleData) => {
 
     if (currentScore <= topScore) return;
 
-    // 負荷軽減のために移動
-    let topPlayerName = server.persistentData[titleData.key + "_player"] || "";
+    // 負荷軽減のために移動　永続データから今のトッププレイヤーを取得
+    let topPlayer = currentData.player || "";
+
+    // console.info(`[chechHighScore] topPlayer:[${topPlayer}], nowPL:[${player.uuid}]`);
 
     // 同一プレイヤーならスコア更新のみ.
-    if (player.username === topPlayerName) {
-        server.persistentData[titleData.key + "_score"] = currentScore;
+    if (player.username === topPlayer || player.uuid === topPlayer) { // uuidに変更するために一度両方記述
+        currentData.score = currentScore;
         return;
     }
 
     // 旧チャンピオンからの剥奪.
-    if (topPlayerName !== "") {
-        let oldChamp = server.getPlayer(topPlayerName);
+    if (topPlayer != "") {
+        let oldChamp = server.getPlayer(topPlayer);
         if (oldChamp) {
             global.ApplyTitle(oldChamp, global.TITLES.NONE);
-            // oldChamp.tell(Text.red(`${categoryName}世界一の座を奪われました！`));
+            oldChamp.tell(Text.red(`${titleData.display}世界一の座を奪われました！`));
         }
     }
 
@@ -47,13 +52,12 @@ global.checkHighScore = (server, player, currentScore, titleData) => {
     global.CheckTitleRank(player, titleData);
 
     // 記録の保存.
-    server.persistentData[titleData.key + "_score"] = currentScore;
-    server.persistentData[titleData.key + "_player"] = player.username;
+    server.persistentData.kings[titleData.key].score = currentScore;
+    server.persistentData.kings[titleData.key].player = String(player.uuid);    // uuidに変更
 
     // 通知用変換.
     let prefix = titleData.display || "";
 
     // 全員通知.
     server.tell(Text.gold(`[速報] ${player.username} がスコア ${currentScore} で新「${prefix}」になりました！`));
-
 };
