@@ -12,12 +12,13 @@ EntityEvents.death('player', event => {
 
     if (event.source.type().msgId() != 'fall') return;    // 早期リターンに変更
 
-    const { player, server } = event;
+    const { player } = event;
+    const pData = player.persistentData.kings || (player.persistentData.kings = {});
+    const titleData = global.TITLES.GENBACAT;
 
-    let playerfallDeathCount = server.persistentData[player.name + "_fallDeath"] || 0;
+    let playerfallDeathCount = pData.data[titleData.key] || 0;
     playerfallDeathCount++;
-    server.persistentData[player.name + "_fallDeath"] = playerfallDeathCount;
+    pData.data[titleData.key] = playerfallDeathCount;
 
-    global.checkHighScore(server, player, playerfallDeathCount, global.TITLES.GENBACAT);
-
+    global.checkHighScore(player, playerfallDeathCount, titleData);
 });
