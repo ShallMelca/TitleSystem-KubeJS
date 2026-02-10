@@ -57,3 +57,9 @@
         * .farmer
           * = int       (種を植えた回数)
         * ...
+
+## その他
+* server.persistentData.isMoved
+  * サーバーデータの旧式から新式への移行が終了しているかを示すbool値
+* player.persistentData.isMoved
+  * 各プレイヤーに対してデータの旧式から新式への移行が終了しているかを示すbool値
