@@ -14,8 +14,8 @@
 global.ApplyTitle = (player, titleData) => {
     const server = player.server;
     const teamName = `t_title_${player.uuid}`;  // player.usernameからuuidへ変更
-    const pData = player.persistentData.kings;
-    const titles = pData.titles || (pData.titles = {}); // なかった場合初期化...
+    const pData = player.persistentData.kings || (player.persistentData.kings = {});
+    const titles = pData.titles || (pData.titles = {});
 
     // 更新処理
     let prefix = titleData.display || "";
