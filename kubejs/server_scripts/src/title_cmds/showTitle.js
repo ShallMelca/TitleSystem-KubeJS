@@ -2,7 +2,7 @@
 
 /*
     server_scripts/src/title_cmds/showTitle.js
-    書いた人:シェイル
+    書いた人:みち
     所持称号表示コマンド /titles show
     OP権限者は他PLの所持称号を確認できる /titles show <PLname>
 */
@@ -16,7 +16,7 @@ ServerEvents.commandRegistry(event => {
         Commands.literal("show")
           // /titles show  (自分)
           .executes(ctx => {
-            const player = ctx.source.player;
+            const player = ctx.source.player;   // コマンドの実行者
             if (!player) {
               ctx.source.sendFailure("このコマンドはプレイヤーから実行してください。");
               return 0;
@@ -31,7 +31,7 @@ ServerEvents.commandRegistry(event => {
                 let title = Object.values(global.TITLES).find(t => t.key === key);
                 prefixText.push(title.display);
             }
-            player.tell(`取得済みの称号: ${prefixText}`);
+            player.tell(`称号リスト: ${prefixText}`);
 
             // 現在セットしている称号表示
             const currentKey = player.persistentData.kings.current.replace(/^"+|"+$/g, "");
@@ -46,10 +46,32 @@ ServerEvents.commandRegistry(event => {
             Commands.argument("player", Arguments.PLAYER.create(event))
               .requires(src => src.hasPermission(2))
               .executes(ctx => {
-                const target = Arguments.PLAYER.getResult(ctx, "player");
+                const sender = ctx.source.player;   // コマンドの実行者
+                const target = Arguments.PLAYER.getResult(ctx, "player");   // 対象のプレイヤー
 
-                // TODO: ここに「target の称号を表示する処理」を入れる
-                // 例: target の称号を ctx.source に表示する
+                // 対象の称号リスト取得
+                const keys = target.persistentData.kings.titles;
+                let prefixText = [];
+                for (let raw of keys) {
+                    let key = ("" + raw).trim();
+                    key = key.replace(/^"+|"+$/g, "");
+                    let title = Object.values(global.TITLES).find(t => t.key === key);
+                    prefixText.push(title.display);
+                }
+                // 現在セットしている称号取得
+                const currentKey = target.persistentData.kings.current.replace(/^"+|"+$/g, "");
+                const currentPrefix = Object.values(global.TITLES).find(t => t.key === currentKey).display;
+
+                //チャット欄に送信
+                if (sender) {   // sender == trueなら実行者はプレイヤー
+                    sender.tell(`プレイヤー名: ${target.name.string}`);
+                    sender.tell(`称号リスト: ${prefixText}`);
+                    sender.tell(`現在の称号: ${currentPrefix}`);
+                } else {
+                    console.info(`プレイヤー名: ${target.name.string}`);
+                    console.info(`称号リスト: ${prefixText}`);
+                    console.info(`現在の称号: ${currentPrefix}`);
+                }
 
                 return 1;
               })
