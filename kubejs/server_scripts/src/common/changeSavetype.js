@@ -72,7 +72,7 @@ PlayerEvents.loggedIn(event => {
     if (!playerData.kings) playerData.kings = {};
     if (!playerData.kings.titles) playerData.kings.titles = [];     // 所持称号配列.
     if (!playerData.kings.data) playerData.kings.data = {};
-    if (!playerData.kings.data.flag) playerData.kings.data.flag = {};       // boolean
+    if (!playerData.kings.data.flags) playerData.kings.data.flags = {};       // boolean
     if (!playerData.kings.data.score) playerData.kings.data.score = {};     // int
 
     // -----データ移行-----
@@ -89,7 +89,7 @@ PlayerEvents.loggedIn(event => {
         let oldKey = player.name + "_" + keyName;
 
         if (serverData.contains(oldKey)) {
-            let value = serverData[oldKey];
+            let value = serverData[oldKey] || 0;
             playerData.kings.data.score[keyName] = value; // fallDeath,lavaDeath共にkeyそのままなので大丈夫なはず...
             console.info(`${file}${serverData[oldKey]} から ${playerData.kings.data.score[keyName]} へ移行しました`);
 
@@ -101,7 +101,7 @@ PlayerEvents.loggedIn(event => {
     // 種植え回数(農業王用個人スコア)
     let oldFarmerkey = player.name + "_seed";
     if (playerData.contains(oldFarmerkey)) {
-        playerData.kings.data.score[global.TITLES.FARMER.key] = playerData[oldFarmerkey];
+        playerData.kings.data.score[global.TITLES.FARMER.key] = playerData[oldFarmerkey] || 0;;
         console.info(`${file}${serverData[oldFarmerkey]} から ${playerData.kings.data.score[global.TITLES.FARMER.key]} へ移行しました`);
         playerData.remove(oldFarmerkey);
     }
@@ -111,12 +111,12 @@ PlayerEvents.loggedIn(event => {
     // 唯一解除済の挑戦型であるpandaに対する処理.
     if (oldTitleId == "PANDA") {
         // 多重取得を防ぐためのboolean
-        playerData.kings.data.flag.firstBambooGetted = true;
+        playerData.kings.data.flags.firstBambooGetted = true;
     }
 
     // 現在の称号オブジェクトを取得
     if (oldTitleId && global.TITLES[oldTitleId]) {
-        let titleObj = global.TITLES[oldTitleId];
+        let titleObj = global.TITLES[oldTitleId] || global.TITLES.NONE;
 
         // 新形式の「現在の称号（key）」を保存
         playerData.kings.current = titleObj.key;
