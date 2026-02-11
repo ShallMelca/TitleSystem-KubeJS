@@ -44,6 +44,14 @@ global.checkHighScore = (player, currentScore, titleData) => {
         let oldChamp = server.getPlayer(topPlayer);
         if (oldChamp) {
             global.ApplyTitle(oldChamp, global.TITLES.NONE);
+            // pData.titlesから削除
+            let keys = player.persistentData.kings.titles;
+            for (let i=0; i<keys.size(); i++) {
+                if (keys.get(i) == titleData.key) {
+                    titles.remove(i);
+                    break;
+                }
+            }
             oldChamp.tell(Text.red(`${titleData.display}世界一の座を奪われました！`));
         }
     }

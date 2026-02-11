@@ -30,5 +30,16 @@ global.ApplyTitle = (player, titleData) => {
 
     // 現在の称号をデータに保存
     pData.current = titleData.key;
+    // みち丸
+    // 重複禁止でtitlesにpush
+    for (let key of titles) {
+        if (key === titleData.key) {
+            // player.tell("重複してます");
+            return 1;
+        }
+    }
+    // player.tell("重複してませんでした");
     titles.push(titleData.key);
+
+    return 1;
 };
