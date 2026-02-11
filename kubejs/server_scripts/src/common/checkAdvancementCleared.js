@@ -10,6 +10,9 @@
 PlayerEvents.loggedIn(event => {
     const { player, server } = event;
 
+    //debug
+    // server.runCommandSilent(`advancement grant ${player.username} only hexcasting:enlightenment`);
+
     // 新しい「進捗」トリガーの挑戦型実績が増えた場合は一応ここに進捗のIDを書き加えてください
     const advancementsData = [
         { id: 'minecraft:nether/all_potions', titles: global.TITLES.POTION },
@@ -27,7 +30,7 @@ PlayerEvents.loggedIn(event => {
         { id: 'mna:faction/join_demons', titles: global.TITLES.MNA_F_DEMONS },
         { id: 'mna:faction/join_fey', titles: global.TITLES.MNA_F_FEY },
         { id: 'mna:faction/join_undead', titles: global.TITLES.MNA_F_UNDEAD },
-        { id: 'mna:tier_4/advance_tier_5', titles: global.TITLES.MNA_MASTER },
+        { id: 'mna:tier_4/advance_tier_5', titles: global.TITLES.MNA_MASTER }
     ];
 
     advancementsData.forEach(element => {
@@ -39,9 +42,14 @@ PlayerEvents.loggedIn(event => {
             if (player.persistentData.kings.flags[elem.titles.key]) return;
         }
 
-        let adv = server.advancements.getAdvancement(elem.id);
-        if (!adv) return;
-        player.persistentData.kings.flags[elem.titles.key] = true;
+        let isDone = server.runCommandSilent(`advancement test ${player.username} ${elem.id}`) > 0;
+        if (!isDone) return;
+
+        if (!player.persistentData.kings) player.persistentData.kings = {};
+        if (!player.persistentData.kings.flags) player.persistentData.kings.flags = {};
+        let pdata = player.persistentData.kings.flags[elem.titles.key] || false;
+        pdata = true;
+        player.persistentData.kings.flags[elem.titles.key] = pdata;
         player.tell(`§o§l§cお§eめ§aで§bと§9う！§r §l貴方は、称号${elem.titles.display}§lを手に入れました！§r`);
         global.ApplyTitle(player, elem.titles);
     }
