@@ -8,10 +8,35 @@
 */
 
 /**
+ * 補助関数
  * keyから称号データを検索して, global.applyTitle()を実行する
  * @param {Internal.Player} player 
  * @param {Sting} key 
  */
 global.selfModifyPrefix = (player, key) => {
-    
+    const title = Object.values(global.TITLES).find(t => t.key === key);
+    global.ApplyTitle(player, title);
 }
+
+ServerEvents.commandRegistry(event => {
+    const { commands: Commands, arguments: Arguments } = event;
+
+    event.register(
+      Commands.literal("titles")
+        .then(
+          Commands.literal("refresh")
+            .executes(ctx => {
+              const player = ctx.source.player;
+              if (!player) return 0;
+
+              const pData = player.persistentData.kings;
+              global.selfModifyPrefix(player, pData.current);
+
+              player.tell("称号を付け直しました");
+
+              return 1;
+            })
+        )      
+    
+    )
+})

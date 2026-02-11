@@ -67,7 +67,8 @@ ServerEvents.commandRegistry(event => {
                 pData.current = setKey;
                 let currentPrefix = Object.values(global.TITLES).find(t => t.key === pData.current).display;
 
-                
+                // team prefix更新処理
+                global.selfModifyPrefix(player, pData.current);
 
                 player.tell(`称号を設定しました\n現在の称号: ${currentPrefix}`);
 
