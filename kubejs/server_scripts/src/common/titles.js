@@ -159,7 +159,7 @@ global.TITLES = {
         key: "create_roadkill",
         isRanking: false,
         rank: 1602,
-        display: "§e[鉄道の使い手！]§r ",
+        display: "§4[鉄道の使い手]§r ",
         least: 0
     },
     CREATE_CARDBOARD: {
@@ -180,7 +180,7 @@ global.TITLES = {
         key: "mna_f_council",
         isRanking: false,
         rank: 1605,
-        display: "§t[古の魔法使い評議会]§r ",
+        display: "§9[古の魔法使い評議会]§r ",
         least: 0
     },
     MNA_F_DEMON: {
