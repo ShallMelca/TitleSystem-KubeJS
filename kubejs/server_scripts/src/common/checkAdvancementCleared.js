@@ -8,34 +8,34 @@
 */
 
 PlayerEvents.loggedIn(event => {
-    const { player } = event;
+    const { player, server } = event;
 
     // 新しい「進捗」トリガーの挑戦型実績が増えた場合は一応ここに進捗のIDを書き加えてください
-    const advancementsData = {
-        Potion: { id: 'minecraft:nether/all_potions', titles: global.TITLES.POTION },
-        Cave_cliff: { id: 'minecraft:adventure/fall_from_world_height', titles: global.TITLES.CAVE_CLIFF },
-        Plane: { id: 'minecraft:adventure/spyglass_at_dragon', titles: global.TITLES.PLANE },
-        Sniper: { id: 'minecraft:adventure/sniper_duel', titles: global.TITLES.SNIPER },
-        Lootr: { id: 'lootr:100loot', titles: global.TITLES.LOOTR },
-        Masterchef: { id: 'farmersdelight:main/master_chef', titles: global.TITLES.MASTERCHEF },
-        Hex_insight: { id: 'hexcasting:enlightenment', titles: global.TITLES.HEX_INSIGHT },
-        Hex_master: { id: 'hexcasting:creative_unlocker', titles: global.TITLES.HEX_MASTER },
-        Create_roadkill: { id: 'create:train_roadkill', titles: global.TITLES.CREATE_ROADKILL }
-    };
+    const advancementsData = [
+        { id: 'minecraft:nether/all_potions', titles: global.TITLES.POTION },
+        { id: 'minecraft:adventure/fall_from_world_height', titles: global.TITLES.CAVE_CLIFF },
+        { id: 'minecraft:adventure/spyglass_at_dragon', titles: global.TITLES.PLANE },
+        { id: 'minecraft:adventure/sniper_duel', titles: global.TITLES.SNIPER },
+        { id: 'lootr:100loot', titles: global.TITLES.LOOTR },
+        { id: 'farmersdelight:main/master_chef', titles: global.TITLES.MASTERCHEF },
+        { id: 'hexcasting:enlightenment', titles: global.TITLES.HEX_INSIGHT },
+        { id: 'hexcasting:creative_unlocker', titles: global.TITLES.HEX_MASTER },
+        { id: 'create:train_roadkill', titles: global.TITLES.CREATE_ROADKILL }
+    ];
 
     advancementsData.forEach(element => {
-        WhatAdvancement(element.id, element.titles);
+        WhatAdvancement(element);
     });
 
-    function WhatAdvancement(adv_id, titleData) {
+    function WhatAdvancement(elem) {
         if (player.persistentData.kings && player.persistentData.kings.flags) {
-            if (player.persistentData.kings.flags[titleData.key]) return;
+            if (player.persistentData.kings.flags[elem.titles.key]) return;
         }
 
-        if (advancement.getId() != adv_id) return;
-
-        player.persistentData.kings.flags[titleData.key] = true;
-        player.tell(`§o§l§cお§eめ§aで§bと§9う！§r §l貴方は、称号${titleData.display}§lを手に入れました！§r`);
-        global.ApplyTitle(player, titleData);
+        let adv = server.advancements.getAdvancement(elem.id);
+        if (!adv) return;
+        player.persistentData.kings.flags[elem.titles.key] = true;
+        player.tell(`§o§l§cお§eめ§aで§bと§9う！§r §l貴方は、称号${elem.titles.display}§lを手に入れました！§r`);
+        global.ApplyTitle(player, elem.titles);
     }
 })
