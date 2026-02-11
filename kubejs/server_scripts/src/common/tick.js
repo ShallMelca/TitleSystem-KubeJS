@@ -16,4 +16,5 @@ PlayerEvents.tick(event => {
     global.Mining(player);
     global.WalkMaster(player);
     global.Seichi(player);
+    global.FishComp(player);
 })
