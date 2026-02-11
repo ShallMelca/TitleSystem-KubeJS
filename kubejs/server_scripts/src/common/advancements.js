@@ -35,7 +35,12 @@ PlayerEvents.advancement(event => {
 
         if (advancement.getId() != adv_id) return;
 
-        player.persistentData.kings.flags[titleData.key] = true;
+        if (!player.persistentData.kings) player.persistentData.kings = {};
+        if (!player.persistentData.kings.flags) player.persistentData.kings.flags = {};
+        let pdata = player.persistentData.kings.flags[titleData.key] || false;
+        pdata = true;
+
+        player.persistentData.kings.flags[titleData.key] = pdata;
         player.tell(`§o§l§cお§eめ§aで§bと§9う！§r §l貴方は、称号${titleData.display}§lを手に入れました！§r`);
         global.ApplyTitle(player, titleData);
     }
