@@ -117,10 +117,10 @@ global.TITLES = {
         key: "plane",
         isRanking: false,
         rank: 1503,
-        display: "§0[B-2 スピリット]§r ",
+        display: "§8[B-2 スピリット]§r ",
         least: 0
     },
-    SNIPER: {    // スナイパー対決
+    SNIPER: {
         key: "sniper",
         isRanking: false,
         rank: 1504,
