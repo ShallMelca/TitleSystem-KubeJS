@@ -18,10 +18,10 @@ EntityEvents.death('player', event => {
     if (event.source.type().msgId() != 'outOfWorld') return;    // 早期リターンに変更.
 
     const { player, server } = event;    // ここで変数化
-    const pData = pd.kings || (pd.kings = {});
-    const flags = pData.flags || (pData.flags = {});
+    if (!player.persistentData.kings) player.persistentData.kings = {};
+    if (!player.persistentData.kings.flags) player.persistentData.kings.flags = {};
 
-    flags[global.TITLES.MEGATONCOIN.key] = true;
+    player.persistentData.kings.flags[global.TITLES.MEGATONCOIN.key] = true;
 
     server.tell(Text.lightPurple(`${player.username} う　わ　あ　あ　あ　あ　あ　あ　あ　あ　あ　あ　あ　！`));
     global.CheckTitleRank(player, global.TITLES.MEGATONCOIN);
