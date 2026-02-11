@@ -93,7 +93,7 @@ PlayerEvents.loggedIn(event => {
         if (serverData.contains(oldKey)) {
             let value = serverData[oldKey] || 0;
             playerData.kings.data.score[keyName] = value; // fallDeath,lavaDeath共にkeyそのままなので大丈夫なはず...
-            console.info(`${file}${oldkey}:${serverData[oldKey]} から player.kings.data.score[${keyName}]:${playerData.kings.data.score[keyName]} へ移行しました`);
+            console.info(`${file}${oldKey}:${serverData[oldKey]} から player.kings.data.score[${keyName}]:${playerData.kings.data.score[keyName]} へ移行しました`);
 
             // サーバー側の古いデータを削除.
             serverData.remove(oldKey);
