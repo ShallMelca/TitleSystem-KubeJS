@@ -55,33 +55,12 @@ global.TITLES = {
         display: "§3[勇者] ",
         least: 64
     },
-    FISHCOMP: { //未実装 魚を釣った回数
+    FISHCOMP: {
         key: "fishcomp",
         isRanking: true,
         rank: 251,
         display: "§b[漁協組合] ",
         least: 32
-    },
-    MNA_APP: {  //未実装
-        key: "mna_app",
-        isRanking: false,
-        rank: 260,
-        display: "§9[中級魔術師]§r ",
-        least: 0
-    },
-    MNA_MASTER: {   //未実装
-        key: "mna_master",
-        isRanking: false,
-        rank: 261,
-        display: "§l§9[上級魔術師]§r",
-        least: 0
-    },
-    HEX_MASTER: {    // 未実装 HexCastingの魔法詠唱回数
-        key: "hex",
-        isRanking: false,
-        rank: 269,
-        display: "§d[HexMaster]§r",
-        least: 16
     },
     PANDA: {
         key: "panda",
@@ -89,13 +68,6 @@ global.TITLES = {
         rank: 300,
         display: "§f[p§8a§fn§8d§fa]§r ",
         least: 5
-    },
-    BELL: { //未実装 鐘を鳴らした回数
-        key: "bell",
-        isRanking: true,
-        rank: 301,
-        display: "§e[近所迷惑]§r ",
-        least: 64
     },
     TRASHMAN: { //未実装
         key: "trash",
@@ -124,6 +96,120 @@ global.TITLES = {
         rank: 1500,
         display: "§d[メガトンコイン]§r ",
         least: 0    //CheckHighScore通らなそうなので参照されない...はず
+    },
+
+    // 以下、NONEまで新規追加予定実績系称号
+    POTION: {
+        key: "potion",
+        isRanking: false,
+        rank: 1501,
+        display: "§5[猛烈なカクテル]§r ",
+        least: 0
+    },
+    CAVE_CLIFF: {
+        key: "cave_cliff",
+        isRanking: false,
+        rank: 1502,
+        display: "§5[洞窟と崖]§r ",
+        least: 0
+    },
+    PLANE: {
+        key: "plane",
+        isRanking: false,
+        rank: 1503,
+        display: "§8[B-2 スピリット]§r ",
+        least: 0
+    },
+    SNIPER: {
+        key: "sniper",
+        isRanking: false,
+        rank: 1504,
+        display: "§5[真のスナイパー]§r ",
+        least: 0
+    },
+    LOOTR: {
+        key: "lootr",
+        isRanking: false,
+        rank: 1505,
+        display: "§e[ワンピース]§r ",
+        least: 0
+    },
+    MASTERCHEF: {
+        key: "masterchef",
+        isRanking: false,
+        rank: 1506,
+        display: "§4[最高の料理人]§r ",
+        least: 0
+    },
+    HEX_INSIGHT: {
+        key: "hex_insight",
+        isRanking: false,
+        rank: 1600,
+        display: "§d[識眼]§r ",
+        least: 0
+    },
+    HEX_MASTER: {
+        key: "hex_master",
+        isRanking: false,
+        rank: 1601,
+        display: "§l§d[Hex Casting]§r ",
+        least: 0
+    },
+    CREATE_ROADKILL: {
+        key: "create_roadkill",
+        isRanking: false,
+        rank: 1602,
+        display: "§4[鉄道の使い手]§r ",
+        least: 0
+    },
+    CREATE_CARDBOARD: {
+        key: "create_cardboard",
+        isRanking: false,
+        rank: 1603,
+        display: "§8[スネーク]§r ",
+        least: 0
+    },
+    CREATE_MASTER: {
+        key: "create_master",
+        isRanking: false,
+        rank: 1604,
+        display: "§l§e[Create]§r ",
+        least: 0
+    },
+    MNA_F_COUNCIL: {
+        key: "mna_f_council",
+        isRanking: false,
+        rank: 1605,
+        display: "§9[古の魔法使い評議会]§r ",
+        least: 0
+    },
+    MNA_F_DEMON: {
+        key: "mna_f_demon",
+        isRanking: false,
+        rank: 1606,
+        display: "§4[ネザーの悪魔]§r ",
+        least: 0
+    },
+    MNA_F_FEY: {
+        key: "mna_f_fey",
+        isRanking: false,
+        rank: 1607,
+        display: "§d[妖精の宮廷]§r ",
+        least: 0
+    },
+    MNA_F_UNDEAD: {
+        key: "mna_f_undead",
+        isRanking: false,
+        rank: 1608,
+        display: "§3[不死者のレギオン]§r ",
+        least: 0
+    },
+    MNA_MASTER: {
+        key: "mna_master",
+        isRanking: false,
+        rank: 1609,
+        display: "§l§3[ManaAndArtifice]§r ",
+        least: 0
     },
     NONE: {
         key: "none",

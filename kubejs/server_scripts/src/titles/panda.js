@@ -20,11 +20,11 @@ BlockEvents.broken(event => {   // ブロックが破壊された時...
 
 
     const { player, server } = event;    // ここで変数化.
-    const pData = pd.kings || (pd.kings = {});
-    const flags = pData.flags || (pData.flags = {});
+    if (!player.persistentData.kings) player.persistentData.kings = {};
+    if (!player.persistentData.kings.flags) player.persistentData.kings.flags = {};
     const titleData = global.TITLES.PANDA;
 
-    flags[titleData.key] = true;
+    player.persistentData.kings.flags[titleData.key] = true;
 
     server.tell(Text.lightPurple(`${player.username} 竹食ってる場合じゃねえ！`));
     global.CheckTitleRank(player, titleData);
