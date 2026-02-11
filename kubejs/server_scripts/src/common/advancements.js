@@ -19,6 +19,13 @@ PlayerEvents.advancement(event => {
     WhatAdvancement('hexcasting:enlightenment', global.TITLES.HEX_INSIGHT);
     WhatAdvancement('hexcasting:creative_unlocker', global.TITLES.HEX_MASTER);
     WhatAdvancement('create:train_roadkill', global.TITLES.CREATE_ROADKILL);
+    WhatAdvancement('create:cardboard_armor', global.TITLES.CREATE_CARDBOARD);
+    WhatAdvancement('create:stressometer_maxed', global.TITLES.CREATE_MASTER);
+    WhatAdvancement('mna:faction/join_council', global.TITLES.MNA_F_COUNCIL);
+    WhatAdvancement('mna:faction/join_demons', global.TITLES.MNA_F_DEMONS);
+    WhatAdvancement('mna:faction/join_fey', global.TITLES.MNA_F_FEY);
+    WhatAdvancement('mna:faction/join_undead', global.TITLES.MNA_F_UNDEAD);
+    WhatAdvancement('mna:tier_4/advance_tier_5', global.TITLES.MNA_MASTER);
 
     // 称号を付与するローカル関数
     function WhatAdvancement(adv_id, titleData) {

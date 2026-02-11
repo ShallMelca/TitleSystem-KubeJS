@@ -20,7 +20,14 @@ PlayerEvents.loggedIn(event => {
         { id: 'farmersdelight:main/master_chef', titles: global.TITLES.MASTERCHEF },
         { id: 'hexcasting:enlightenment', titles: global.TITLES.HEX_INSIGHT },
         { id: 'hexcasting:creative_unlocker', titles: global.TITLES.HEX_MASTER },
-        { id: 'create:train_roadkill', titles: global.TITLES.CREATE_ROADKILL }
+        { id: 'create:train_roadkill', titles: global.TITLES.CREATE_ROADKILL },
+        { id: 'create:cardboard_armor', titles: global.TITLES.CREATE_CARDBOARD },
+        { id: 'create:stressometer_maxed', titles: global.TITLES.CREATE_MASTER },
+        { id: 'mna:faction/join_council', titles: global.TITLES.MNA_F_COUNCIL },
+        { id: 'mna:faction/join_demons', titles: global.TITLES.MNA_F_DEMONS },
+        { id: 'mna:faction/join_fey', titles: global.TITLES.MNA_F_FEY },
+        { id: 'mna:faction/join_undead', titles: global.TITLES.MNA_F_UNDEAD },
+        { id: 'mna:tier_4/advance_tier_5', titles: global.TITLES.MNA_MASTER },
     ];
 
     advancementsData.forEach(element => {
