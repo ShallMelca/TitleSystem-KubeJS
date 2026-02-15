@@ -45,7 +45,7 @@ global.checkHighScore = (player, currentScore, titleData) => {
         if (oldChamp) {
             global.ApplyTitle(oldChamp, global.TITLES.NONE);
             // pData.titlesから削除
-            let keys = player.persistentData.kings.titles;
+            let keys = oldChamp.persistentData.kings.titles;
             for (let i=0; i<keys.size(); i++) {
                 if (keys.get(i) == titleData.key) {
                     titles.remove(i);
